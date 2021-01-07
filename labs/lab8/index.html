@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>Trivia!</title>
+
+        <script>
+            // cGive button with specific color
+            function put_button_color(buttons, index, color)
+            {
+                let default_color = "#d9edff";
+                for (let i = 0; i < buttons.length; i ++)
+                {
+                    buttons[i].style.backgroundColor = default_color;
+                }
+
+                buttons[index].style.backgroundColor = color;
+            }
+
+            answers =
+            {
+                "q1": "Oceania",
+                "q2": "30"
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                // Check first question
+                let buttons = document.querySelectorAll(".q1");
+
+                // Add listeners
+                for (let i = 0; i < buttons.length; i ++)
+                {
+                    if (buttons[i].innerHTML == answers["q1"])
+                    {
+                        buttons[i].onclick = () => {
+                            put_button_color(buttons, i, "#00CC33");
+                            document.querySelector("#q1-flag").innerHTML = "Correct!";
+                        };
+                    }
+                    else
+                    {
+                        buttons[i].onclick = () => {
+                            put_button_color(buttons, i, "#FF6633");
+                            document.querySelector("#q1-flag").innerHTML = "Incorrect";
+                        };
+                    }
+                }
+
+                // Check second question
+                document.querySelector("#check").addEventListener("click", function() {
+                    let input = document.querySelector("#q2");
+
+                    if (input.value == "")
+                    {
+                        alert("Textfield cannot be empty!");
+                        return;
+                    }
+
+                    if (input.value == answers["q2"])
+                    {
+                        input.style.backgroundColor = "#00CC33";
+                        document.querySelector("#q2-flag").innerHTML = "Correct!";
+                    }
+                    else
+                    {
+                        input.style.backgroundColor = "#FF6633";
+                        document.querySelector("#q2-flag").innerHTML = "Incorrect";
+                    }
+                });
+            });
+        </script>
+
+    </head>
+    <body>
+
+        <div class="jumbotron">
+            <h1>Trivia!</h1>
+        </div>
+
+        <div class="container">
+
+            <div class="section">
+                <h2>Part 1: Multiple Choice </h2>
+                <hr>
+
+                <!-- TODO: Add multiple choice question here -->
+                <h3>Which continet is with the smallest area?</h3>
+
+                <button class="q1">Asia</button>
+                <button class="q1">Africa</button>
+                <button class="q1">Europe</button>
+                <button class="q1">Oceania</button>
+                <button class="q1">South America</button>
+                <p id="q1-flag"></p>
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Free Response</h2>
+                <hr>
+
+                <!-- TODO: Add free response question here -->
+                <h3>What is the product of 5 and 6</h3>
+                <input type="text" id="q2">
+                <button id="check">Check Answer</button>
+                <p id=q2-flag></p>
+            </div>
+
+        </div>
+    </body>
+</html>

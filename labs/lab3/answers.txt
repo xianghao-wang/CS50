@@ -1,0 +1,11 @@
+sort1 uses: Bubble sort
+
+How do you know?: It takes least time on sorting the sorted numbers
+
+sort2 uses: Merge sort
+
+How do you know?: Compare the time used by random5000.txt and random10000.txt, sort 2 has the best efficiency obviously
+
+sort3 uses: Selection sort
+
+How do you know?: It takes most time on sorting the sorted numbers
