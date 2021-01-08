@@ -15,7 +15,6 @@ app = Flask(__name__)
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-
 # Ensure responses aren't cached
 @app.after_request
 def after_request(response):
@@ -115,16 +114,18 @@ def logout():
 @login_required
 def quote():
     """Get stock quote."""
-    return apology("TODO")
+    if request.method == "POST":
+        return render_template("quoted.html", quote=lookup(request.form.get("symbol")))
+    else:
+        """Show quote result"""
+        return render_template("quote.html")
+
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-
-    if request.method == "GET":
-        return render_template("register.html")
-    else:
+    if request.method == "POST":
         # Check validity of username and password
         if not request.form.get("username") or not request.form.get("password") or not request.form.get("password-again"):
             # Missing username or password
@@ -145,6 +146,8 @@ def register():
 
         # Redirect to index page
         return redirect("/")
+    else:
+        return render_template("register.html")
 
 
 @app.route("/sell", methods=["GET", "POST"])
