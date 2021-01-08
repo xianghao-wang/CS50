@@ -53,7 +53,45 @@ def index():
 @login_required
 def buy():
     """Buy shares of stock"""
-    return apology("TODO")
+    if request.method == "POST":
+        # Check parameters
+        if not request.form.get("symbol") or not request.form.get("shares"):
+            # Missing parameters
+            return apology("Missing symbol or shares!")
+        
+        quote = lookup(request.form.get("symbol"))
+        if not quote:
+            # Symbol does not exist
+            return apology("Symbol does not exist!")
+
+        # Check shares
+        try:
+            shares = int(request.form.get("shares"))
+        except Exception as e:
+            return apology("Invalid shares!")
+
+        if shares <= 0:
+            return apology("Invalid shares!")
+
+        # Pay
+        prices = shares * quote["price"]    
+        cash = db.execute("SELECT cash FROM users WHERE id=?", session["user_id"])[0]["cash"]
+        if prices > cash:
+            flash("You do not have enough cash!")
+            return redirect("/buy")
+        db.execute("UPDATE users SET cash=? WHERE id=?", cash - prices, session["user_id"])
+
+        # Gain stocks
+        stocks = db.execute("SELECT id, shares FROM stocks WHERE user_id=? AND symbol=?", session["user_id"], request.form.get("symbol"))
+        print(session["user_id"])
+        if len(stocks) == 0:
+            db.execute("INSERT INTO stocks (user_id, symbol, shares) VALUES (?, ?, ?)", session["user_id"], request.form.get("symbol"), shares)
+        else:
+            db.execute("UPDATE stocks SET shares=? WHERE id=?", shares + stocks[0]["shares"], stocks[0]["id"])
+
+        return redirect("/")
+    else:
+        return render_template("buy.html")
 
 
 @app.route("/history")

@@ -1,15 +1,18 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Quote
+    Buy
 {% endblock %}
 
 {% block main %}
-    <form action="/quote" method="POST">
+    <form action="/buy" method="POST">
         <div class="form-group">
             <input class="form-control" autocomplete="off" autofocus name="symbol" type="text" placeholder="Symbol">
         </div>
-
-        <button class="btn btn-primary" type="submit">Quote</button>
+        <div class="form-group">
+            <input class="form-control" name="shares" type="number" min="1" placeholder="Shares">  
+        </div>
+        
+        <button class="btn btn-primary" type="submit">Buy</button>
     </form>
 {% endblock %}
