@@ -46,6 +46,7 @@ if not os.environ.get("API_KEY"):
 @login_required
 def index():
     """Show portfolio of stocks"""
+
     return apology("TODO")
 
 
@@ -120,7 +121,30 @@ def quote():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-    return apology("TODO")
+
+    if request.method == "GET":
+        return render_template("register.html")
+    else:
+        # Check validity of username and password
+        if not request.form.get("username") or not request.form.get("password") or not request.form.get("password-again"):
+            # Missing username or password
+            flash("Missing username or password!")
+            return redirect("register")
+
+        if db.execute("SELECT COUNT(*) FROM users WHERE username=?", request.form.get("username"))[0]['COUNT(*)'] != 0:
+            # User already exists
+            flash("Username already exists!")
+            return redirect("register")
+
+        # Store user info
+        db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", request.form.get("username"), generate_password_hash(request.form.get("password")))
+
+        # Store cookies
+        user_id = db.execute("SELECT id FROM users WHERE username=?", request.form.get("username"))[0]["username"]
+        session["user_id"] = user_id
+
+        # Redirect to index page
+        return redirect("/")
 
 
 @app.route("/sell", methods=["GET", "POST"])
@@ -135,7 +159,6 @@ def errorhandler(e):
     if not isinstance(e, HTTPException):
         e = InternalServerError()
     return apology(e.name, e.code)
-
 
 # Listen for errors
 for code in default_exceptions:
