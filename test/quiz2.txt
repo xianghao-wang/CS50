@@ -1,0 +1,50 @@
+1.
+ 1  SET r1 "x: " # Set register 1 to be "x: "
+ 2  PRINT r1 # Print "x: "
+ 3  INPUT r2 # Store user's input into r2
+ 4  SET r1 "y: " # Set register 1 to be "y: "
+ 5  PRINT r1 # Print "y: "
+ 6  INPUT r3 # Store user's input into r3
+ 7  JUMPEQ r2 r3 11 # if r2 == r3, jump to line 11 else line 8
+ 8  SET r1 "x is not equal to y" # Set register 1 to be "x is not equal to y"
+ 9  PRINT r1 Print "x is not equal to y"
+10  EXIT
+11  SET r1 "x is equal to y" # Set register 1 to be "x is equal to y"
+12  PRINT r1 # print "x is equal to y"
+13  EXIT
+
+2.
+01 SET r1 "x: "
+02 PRINT r1
+03 INPUT r2
+04 SET r1 "y: "
+05 PRINT r1
+06 INPUT r3
+07 JUMPLT r2 r3 15
+08 JUMPEQ r2 r3 12
+09 SET r1 "x is greater than y"
+10 PRINT r1
+11 EXIT
+12 SET r1 "x is equal to y"
+13 PRINT r1
+14 EXIT
+15 SET r1 "x is less than y"
+16 PRINT r1
+17 EXIT
+
+3.
+01 SET r4 "times: "
+02 PRINT r4
+03 INPUT r1
+04 SET r2 0 # Counter
+05 SET r3 1 # For increment
+06 JUMPLT r2 r1 08
+07 EXIT
+08 ADD r2 r1 r3
+09 SET r4 "cough"
+10 PRINT r4
+11 JUMPLT r2 r1 06
+12 EXIT 
+
+4. callq; There is printf following this.
+5. movabsq; the first argument is a variable of string, and it stores it. 

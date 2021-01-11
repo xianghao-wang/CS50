@@ -1,0 +1,34 @@
+1. A string starting with "ye" appended with at least one "s"
+2. A string starting with "yes" appended with some white-space characters
+3. r"my name is .*\b(.+)$"
+4. ^(EMMA)*$
+
+5. 
+INSERT INTO followers (follower_id, followee_id) VALUES (
+    SELECT id FROM users WHERE username="max",
+    SELECT id FROM users WHERE username="ileana"
+);
+
+6.
+SELECT username FROM users
+WHERE id IN (SELECT follower_id FROM followers WHERE followee_id=(SELECT id FROM users WHERE name="reese"))
+AND id IN (SELECT followee_id FROM followers WHERE follower_id=(SELECT id FROM users WHERE name="reese"));
+
+7.
+SELECT usernames FROM users
+WHERE id IN (SELECT followee_id FROM followers WHERE follower_id IN (SELECT followee_id FROM followers WHERE follower_id=(SELECT id FROM users WHERE name="reese")));
+
+8.
+CREATE TABLE friendships (
+    friendA_id INTEGER,
+    friendB_id INTEGER,
+    accepted INTEGER;
+    FOREIGN KEY (friendA_id) REFERENCES users(id),
+    FOREIGN KEY (friendB_id) REFERENCES users(id)
+);
+
+9.
+INSERT INTO friendships (friendA_id, friendB_id, accepted) VALUES ((SELECT id FROM users WHERE name="max"), (SELECT id FROM users WHERE name="ileana"), 0);
+
+10.
+UPDATE friendships SET accepted=1 WHERE friendA_id=(SELECT id FROM users WHERE name="max") AND friendB_id=(SELECT id FROM users WHERE name="ileana");

@@ -1,0 +1,20 @@
+1. XOR
+
+2. 
+01100101 10100010 01101111
+00111100 11100111 00111100
+--------------------------
+01011001 01000101 01010011
+--------------------------
+0x59     0x45     0x53
+--------------------------
+Y        E        S
+
+3. use this one-time pad several times on each 2 bytes
+
+4. For example, the length of one-time pad is 16. If the bits in encryped data at 1th and 17th index are different, we can know bits at 1 and 17 index
+in origin dat are different. If they are same in encrypted data, we can know they are the same in origin one. 
+
+5. swap
+
+7. Suppose we have A, B, C for original data. We can backup them onto D such that D = A XOR B XOR C

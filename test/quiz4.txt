@@ -1,0 +1,59 @@
+1. 
+int fgetpos(FILE *stream)
+{
+    return stream->current_byte - stream->first_byte;
+}
+
+2. 
+bool fsetpos(FILE *stream, int offset)
+{
+    // stream is NULL
+    if (! stream)
+        return false;
+
+    // offset is invalid
+    if (offset < 0 || offset >= stream->size)
+        return false;
+
+    // Set position
+    stream->current_byte = stream->first_byte + offset;
+    return true;
+}
+
+3.
+typedef unsigned char BYTE;
+
+ bool fwrite(BYTE *buffer, int size, FILE *stream)
+ {
+    // buffer or stream is null
+     if (!buffer or !stream)
+        return false;
+
+    // file is readonly
+    if (stream.readonly)
+        return false;
+
+    // size is invalid
+    if (size < 0)
+        return false;
+
+    // Write
+    int count = 0;
+    while (size --)
+    {
+        buffer[count] = *(stream.current_byte);
+        stream.current_byte ++;
+        stream.size ++;
+    }
+ }
+
+ 4.
+ bool feof(FILE *stream)
+ {
+     if (stream.current_byte - stream.first_byte >= size)
+     {
+         return true;
+     }
+
+     return false;
+ }
